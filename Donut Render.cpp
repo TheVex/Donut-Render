@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <cmath>
 #include <vector>
+#include <conio.h>
 
 // If on Windows machine
 #ifdef _WIN32
@@ -19,11 +20,11 @@
 using namespace std;
 
 // Window size
-int width = 50;
-int height = 30;
+int width = 40;
+int height = 40;
 
-const float theta_interval = 0.07;
-const float phi_interval = 0.03;
+const float theta_interval = 0.07f;
+const float phi_interval = 0.03f;
 
 // Inner torus' circle radius
 const int R1 = 1;
@@ -40,7 +41,7 @@ const int K2 = 5;
 // screen_width*K2*3/(8*(R1+R2)) = K1
 const float K1 = height * K2 * 3 / (8 * (R1 + R2));
 
-const float pi = 3.14;
+const float pi = 3.14f;
 
 
 void SetConsoleWindowSize() {
@@ -137,8 +138,29 @@ void renderFrame(float directionA, float directionB) {
 int main()
 {
     SetConsoleWindowSize();
-    for (float a = 0; a < 100; a += 0.05) {
-        renderFrame(a, a);
+    float oX = 0, oY = 0;
+    float speed = 0.05f;
+    renderFrame(oX, oY);
+    while (true) {
+        char ch = _getch();
+        switch (ch) {
+            case 'w':
+                oY += speed;
+                break;
+            case 's':
+                oY -= speed;
+                break;
+            case 'a':
+                oX -= speed;
+                break;
+            case 'd':
+                oX += speed;
+                break;
+            case 'q':
+                cout << "Program finished!\n";
+                return 0;
+        }
+        renderFrame(oX, oY);
     }
 }
 
